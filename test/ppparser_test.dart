@@ -16,13 +16,15 @@ void main() {
     await ppparser.parseAndSave();
 
     final outputFile = File(outputFilePath);
-    final outputFileExists = await outputFile.exists();
+    final outputFileExists = outputFile.existsSync();
 
     expect(outputFileExists, true);
 
     final outputFileContents = await outputFile.readAsString();
-    expect(outputFileContents,
-        '{"192.168.1.53":["66","1329","1142"],'
-        '"192.144.2.177":["88","132","11"]}');
+    expect(
+      outputFileContents,
+      '{"192.168.1.53":["66","1329","1142"],'
+      '"192.144.2.177":["88","132","11"]}',
+    );
   });
 }

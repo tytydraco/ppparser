@@ -23,7 +23,7 @@ Future<void> main(List<String> arguments) async {
           stdout.writeln(parser.usage);
           exit(0);
         }
-      }
+      },
     )
     ..addOption(
       'input',
@@ -39,8 +39,8 @@ Future<void> main(List<String> arguments) async {
     );
 
   final options = parser.parse(arguments);
-  final String inputFilePath = options['input'];
-  final String outputFilePath = options['output'];
+  final inputFilePath = options['input'] as String;
+  final outputFilePath = options['output'] as String;
 
   final ppparser = PPParser(
     inputFilePath: inputFilePath,
