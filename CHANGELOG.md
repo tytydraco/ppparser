@@ -1,3 +1,7 @@
+## 1.0.1+1
+
+* Convert LICENSE to 2-Clause BSD
+
 ## 1.0.1
 
 * Follow Very Good Analysis guidelines
