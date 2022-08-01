@@ -1,16 +1,9 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
-import 'package:logging/logging.dart';
 import 'package:ppparser/ppparser.dart';
 
 Future<void> main(List<String> arguments) async {
-  Logger.root.level = Level.FINER;
-  Logger.root.onRecord.listen((event) {
-    final message = '[${event.level.name}] ${event.message}';
-    stdout.writeln(message);
-  });
-
   final parser = ArgParser();
   parser
     ..addFlag(

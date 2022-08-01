@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:logging/logging.dart';
-
 /// Parse a text file for IP-port combos and output the results to a JSON file.
 class PPParser {
   /// Create a new [PPParser] given an [inputFilePath] and an [outputFilePath].
@@ -11,7 +9,7 @@ class PPParser {
     required this.outputFilePath,
   }) {
     if (!_inputFile.existsSync()) {
-      Logger.root.severe('Input file does not exist');
+      stderr.writeln('Input file does not exist');
       exit(1);
     }
   }
@@ -35,11 +33,11 @@ class PPParser {
     for (final line in inputFileLines) {
       final trimmedLine = line.trim();
 
-      Logger.root.finer('Reading: $trimmedLine');
+      stdout.writeln('Reading: $trimmedLine');
 
       final ipMatch = _regexIP.firstMatch(trimmedLine)?.group(1);
       if (ipMatch != null) {
-        Logger.root.fine('Matched new IP: $ipMatch');
+        stdout.writeln('Matched new IP: $ipMatch');
         currentIP = ipMatch;
         ipPortMap[currentIP] = [];
         continue;
@@ -47,24 +45,24 @@ class PPParser {
 
       final portMatch = _regexPort.firstMatch(trimmedLine)?.group(1);
       if (portMatch != null && currentIP != null) {
-        Logger.root.fine('Matched new port: $portMatch');
+        stdout.writeln('Matched new port: $portMatch');
         ipPortMap[currentIP]!.add(portMatch);
         continue;
       } else if (portMatch != null && currentIP == null) {
-        Logger.root.severe('Matched port with no parent IP: $portMatch');
+        stderr.writeln('Matched port with no parent IP: $portMatch');
         exit(1);
       }
 
       if (trimmedLine.isEmpty || trimmedLine.startsWith('#')) {
-        Logger.root.finer('Ignoring: $trimmedLine');
+        stdout.writeln('Ignoring: $trimmedLine');
         continue;
       }
 
-      Logger.root.severe('Invalid syntax: $trimmedLine');
+      stderr.writeln('Invalid syntax: $trimmedLine');
       exit(1);
     }
 
-    Logger.root.finer('Generated: ${ipPortMap.toString()}');
+    stdout.writeln('Generated: ${ipPortMap.toString()}');
 
     return ipPortMap;
   }
