@@ -1,3 +1,7 @@
+## 1.0.3
+
+* Add executable
+
 ## 1.0.2
 
 * Use stdio logging

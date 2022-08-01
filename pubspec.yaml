@@ -1,6 +1,6 @@
 name: ppparser
 description: A Performance Port Parser that converts IP-port pairs to a JSON format.
-version: 1.0.2
+version: 1.0.3
 repository: https://www.github.com/tytydraco/ppparser
 
 environment:
@@ -12,3 +12,6 @@ dependencies:
 dev_dependencies:
   test: ^1.16.0
   very_good_analysis: ^3.0.1
+
+executables:
+  ppparser: ppparser
