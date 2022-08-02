@@ -3,26 +3,24 @@ import 'dart:io';
 import 'package:ppparser/src/ppparser.dart';
 import 'package:test/test.dart';
 
+const exampleInput = '''
+# Example one
+192.168.1.53
+66
+1329
+1142
+
+# Example two
+192.144.2.177
+88
+132
+11''';
+
 void main() {
-  test('Parse test file', () async {
-    const inputFilePath = 'test/test_input.txt';
-    const outputFilePath = 'test/test_output.json';
-
-    final ppparser = PPParser(
-      inputFilePath: inputFilePath,
-      outputFilePath: outputFilePath,
-    );
-
-    await ppparser.parseAndSave();
-
-    final outputFile = File(outputFilePath);
-    final outputFileExists = outputFile.existsSync();
-
-    expect(outputFileExists, true);
-
-    final outputFileContents = await outputFile.readAsString();
+  test('Parse test content', () async {
+    final ppparser = PPParser(exampleInput);
     expect(
-      outputFileContents,
+      ppparser.parse(),
       '{"192.168.1.53":["66","1329","1142"],'
       '"192.144.2.177":["88","132","11"]}',
     );

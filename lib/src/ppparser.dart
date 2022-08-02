@@ -1,36 +1,24 @@
 import 'dart:convert';
 import 'dart:io';
 
-/// Parse a text file for IP-port combos and output the results to a JSON file.
+/// Parse text for IP-port combos and output the results as JSON.
 class PPParser {
-  /// Create a new [PPParser] given an [inputFilePath] and an [outputFilePath].
-  PPParser({
-    required this.inputFilePath,
-    required this.outputFilePath,
-  }) {
-    if (!_inputFile.existsSync()) {
-      stderr.writeln('Input file does not exist');
-      exit(1);
-    }
-  }
+  /// Create a new [PPParser] given some [input].
+  PPParser(this.input);
 
-  /// Input file to parse.
-  final String inputFilePath;
+  /// Input to parse.
+  final String input;
 
-  /// Output file to write the JSON to.
-  final String outputFilePath;
-
-  late final _inputFile = File(inputFilePath);
   final _regexIP = RegExp(r'(^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$)');
   final _regexPort = RegExp(r'(^\d{1,6}$)');
 
-  /// Convert the input file into a valid JSON file.
-  Future<Map<String, List<String>>> _parseIPPortMap() async {
+  /// Convert the input content into valid JSON.
+  Map<String, List<String>> _parseIPPortMap() {
     final ipPortMap = <String, List<String>>{};
-    final inputFileLines = await _inputFile.readAsLines();
+    final inputLines = input.split('\n');
 
     String? currentIP;
-    for (final line in inputFileLines) {
+    for (final line in inputLines) {
       final trimmedLine = line.trim();
 
       stdout.writeln('Reading: $trimmedLine');
@@ -67,11 +55,10 @@ class PPParser {
     return ipPortMap;
   }
 
-  /// Parse and save the output.
-  Future<void> parseAndSave() async {
-    final ipPortMap = await _parseIPPortMap();
-    final outputFile = File(outputFilePath);
+  /// Parse the input and return the output as JSON.
+  String parse() {
+    final ipPortMap = _parseIPPortMap();
     final ipPortJson = jsonEncode(ipPortMap);
-    await outputFile.writeAsString(ipPortJson);
+    return ipPortJson;
   }
 }

@@ -35,10 +35,16 @@ Future<void> main(List<String> arguments) async {
   final inputFilePath = options['input'] as String;
   final outputFilePath = options['output'] as String;
 
-  final ppparser = PPParser(
-    inputFilePath: inputFilePath,
-    outputFilePath: outputFilePath,
-  );
+  final inputFile = File(inputFilePath);
 
-  await ppparser.parseAndSave();
+  if (!inputFile.existsSync()) {
+    stderr.writeln('Input file does not exist');
+    exit(1);
+  }
+
+  final input = inputFile.readAsStringSync();
+  final ppparser = PPParser(input);
+
+  final output = ppparser.parse();
+  File(outputFilePath).writeAsStringSync(output);
 }

@@ -1,6 +1,7 @@
 ## 1.0.4
 
 * Convert from lib to app
+* Do file management in bin
 
 ## 1.0.3
 
