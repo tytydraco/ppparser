@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:ppparser/ppparser.dart';
+import 'package:ppparser/src/ppparser.dart';
 import 'package:test/test.dart';
 
 void main() {

@@ -1,3 +1,7 @@
+## 1.0.4
+
+* Convert from lib to app
+
 ## 1.0.3
 
 * Add executable
