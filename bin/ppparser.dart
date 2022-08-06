@@ -43,8 +43,6 @@ Future<void> main(List<String> arguments) async {
   }
 
   final input = inputFile.readAsStringSync();
-  final ppparser = PPParser(input);
-
-  final output = ppparser.parse();
+  final output = parse(input);
   File(outputFilePath).writeAsStringSync(output);
 }

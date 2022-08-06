@@ -1,3 +1,7 @@
+## 1.0.5
+
+* Drop implementation from class
+
 ## 1.0.4
 
 * Convert from lib to app

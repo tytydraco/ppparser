@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:ppparser/src/ppparser.dart';
 import 'package:test/test.dart';
 
@@ -18,9 +16,8 @@ const exampleInput = '''
 
 void main() {
   test('Parse test content', () async {
-    final ppparser = PPParser(exampleInput);
     expect(
-      ppparser.parse(),
+      parse(exampleInput),
       '{"192.168.1.53":["66","1329","1142"],'
       '"192.144.2.177":["88","132","11"]}',
     );
