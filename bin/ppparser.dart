@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:args/args.dart';
 import 'package:ppparser/src/ppparser.dart';
+import 'package:stdlog/stdlog.dart' as std;
 
 Future<void> main(List<String> arguments) async {
   final parser = ArgParser();
@@ -38,7 +39,7 @@ Future<void> main(List<String> arguments) async {
   final inputFile = File(inputFilePath);
 
   if (!inputFile.existsSync()) {
-    stderr.writeln('Input file does not exist');
+    std.error('Input file does not exist');
     exit(1);
   }
 

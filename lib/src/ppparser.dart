@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:stdlog/stdlog.dart' as std;
 
 final _regexIP = RegExp(r'(^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$)');
 final _regexPort = RegExp(r'(^\d{1,6}$)');
@@ -13,11 +14,11 @@ Map<String, List<String>> _parseIPPortMap(String input) {
   for (final line in inputLines) {
     final trimmedLine = line.trim();
 
-    stdout.writeln('Reading: $trimmedLine');
+    std.debug('Reading: $trimmedLine');
 
     final ipMatch = _regexIP.firstMatch(trimmedLine)?.group(1);
     if (ipMatch != null) {
-      stdout.writeln('Matched new IP: $ipMatch');
+      std.debug('Matched new IP: $ipMatch');
       currentIP = ipMatch;
       ipPortMap[currentIP] = [];
       continue;
@@ -25,24 +26,24 @@ Map<String, List<String>> _parseIPPortMap(String input) {
 
     final portMatch = _regexPort.firstMatch(trimmedLine)?.group(1);
     if (portMatch != null && currentIP != null) {
-      stdout.writeln('Matched new port: $portMatch');
+      std.debug('Matched new port: $portMatch');
       ipPortMap[currentIP]!.add(portMatch);
       continue;
     } else if (portMatch != null && currentIP == null) {
-      stderr.writeln('Matched port with no parent IP: $portMatch');
+      std.error('Matched port with no parent IP: $portMatch');
       exit(1);
     }
 
     if (trimmedLine.isEmpty || trimmedLine.startsWith('#')) {
-      stdout.writeln('Ignoring: $trimmedLine');
+      std.debug('Ignoring: $trimmedLine');
       continue;
     }
 
-    stderr.writeln('Invalid syntax: $trimmedLine');
+    std.error('Invalid syntax: $trimmedLine');
     exit(1);
   }
 
-  stdout.writeln('Generated: ${ipPortMap.toString()}');
+  std.info('Generated: ${ipPortMap.toString()}');
 
   return ipPortMap;
 }

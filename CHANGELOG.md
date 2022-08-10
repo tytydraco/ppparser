@@ -1,3 +1,7 @@
+## 1.0.6
+
+* Swap to stdlog
+
 ## 1.0.5
 
 * Drop implementation from class
